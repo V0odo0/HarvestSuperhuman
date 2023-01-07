@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.knot.localization": {
+      "version": "https://github.com/V0odo0/KNOT-Localization.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "08e4201aa2551b646dfc466414e626afbda883cf"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.8",
       "depth": 1,
