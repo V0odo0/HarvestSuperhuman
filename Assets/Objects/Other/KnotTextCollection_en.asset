@@ -29,3 +29,13 @@ MonoBehaviour:
     _rawText: "Absolute Prostration\r"
   - _key: Mod.Description.STATS_DEVIATION_NEGATIVE_ALL
     _rawText: Decreases ALL stats upper bound bias by <b>{0}</b> for future generation
+  - _key: Mod.Type.Positive
+    _rawText: Perk
+  - _key: Mod.Type.Neutral
+    _rawText: Feature
+  - _key: Mod.Type.Negative
+    _rawText: Disease
+  - _key: Mod.Name.STATS_BURST_POSITIVE_ALL
+    _rawText: Single Burst {0}
+  - _key: Mod.Description.STATS_BURST_POSITIVE_ALL
+    _rawText: Adds {0} points to ALL stats and disappears

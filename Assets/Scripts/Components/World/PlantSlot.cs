@@ -27,9 +27,14 @@ namespace HSH
 
         [SerializeField] private Image _growthTimerFillImage;
         [SerializeField] private Plant _plant;
+        [SerializeField] private ParticleSystem _startBreedingStateParticles;
+        [SerializeField] private ParticleSystem _breedingStateParticles;
 
         [Space]
         [SerializeField] private Animator _actionButtonAnimator;
+        [SerializeField] private AudioSource _plantAudioSource;
+        [SerializeField] private AudioSource _breedingAudioSource;
+        [SerializeField] private AudioSource _harvestAudioSource;
 
 
         protected override void Awake()
@@ -88,14 +93,21 @@ namespace HSH
                     break;
                 case PlantSlotProcessor.SlotState.Empty:
                     _actionButton.Button.interactable = true;
+
+                    _harvestAudioSource.Play();
                     break;
                 case PlantSlotProcessor.SlotState.Breeding:
+                    _plantAudioSource.Play();
+                    _breedingAudioSource.Play();
+
+                    _startBreedingStateParticles.Play();
                     _actionButton.Button.interactable = false;
                     _slotResultDna.Set(Processor);
                     break;
                 case PlantSlotProcessor.SlotState.FullyGrown:
                     _actionButton.Button.interactable = true;
                     _growthTimerFillImage.fillAmount = 1f;
+
                     break;
             }
 
@@ -109,6 +121,11 @@ namespace HSH
             _actionButtonAnimator.SetInteger("State", (int) Processor.State);
             _actionButtonAnimator.SetTrigger("StateChanged");
             _actionButtonCanvasGroup.alpha = _actionButton.Button.interactable ? 1f : 0.5f;
+
+            if (state == PlantSlotProcessor.SlotState.Breeding)
+                _breedingStateParticles.Play();
+            else _breedingStateParticles.Stop();
+
         }
 
         public void SetProcessor(PlantSlotProcessor processor)

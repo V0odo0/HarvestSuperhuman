@@ -15,7 +15,7 @@ MonoBehaviour:
   _gameCore:
     MaxPlantSlots: 5
     MaxGrowthStages: 9
-    GrowthStageTime: 0.05
+    GrowthStageTime: 0.1
     DefaultStatBreedBound: 10
     MaxDnaMods: 5
     DefaultSeedDnaItem:
@@ -36,6 +36,15 @@ MonoBehaviour:
         Imm: 0
         Bea: 0
       _mods: []
+  _sprites:
+    <SeedIcon>k__BackingField: {fileID: 21300000, guid: 0ca3a7208a17a544aab8089681cecd6c, type: 3}
+    <WombIcon>k__BackingField: {fileID: 21300000, guid: 0fba2615cd58f2247b72a00e3df069e3, type: 3}
+  _sounds:
+    <BlopA>k__BackingField: {fileID: 8300000, guid: 236ce792297b0ff488b0aa980976f597, type: 3}
+    <PickA>k__BackingField: {fileID: 8300000, guid: a3886d29fdb5d8a4aa2b1da31a3843b3, type: 3}
+    <PlantA>k__BackingField: {fileID: 8300000, guid: aeb1f404a2682a041aa8765217152bf2, type: 3}
+    <HeartBeatA>k__BackingField: {fileID: 8300000, guid: 7b0cb4fa0af8db7478a7790920342646, type: 3}
+    <StretchA>k__BackingField: {fileID: 8300000, guid: d51cf8183f2a7e248993353e91679784, type: 3}
   _colors:
     <NegativeLight>k__BackingField: {r: 1, g: 0, b: 0, a: 0.2509804}
     <NeutralLight>k__BackingField: {r: 1, g: 0.8587734, b: 0.4009434, a: 0.2509804}
@@ -45,8 +54,17 @@ MonoBehaviour:
     <ModButton>k__BackingField: {fileID: 4482458454153011791, guid: 3dbe96470327e4a4aac58ec6a81415c3, type: 3}
   _mods:
     All:
+    - {fileID: 11400000, guid: e1008091cd7502e45830da42c169a8c8, type: 2}
     - {fileID: 11400000, guid: 3aed5d887ec740a47b957c005f3a9e33, type: 2}
     - {fileID: 11400000, guid: 622bda18e88ce2e46b520e949237ec96, type: 2}
     - {fileID: 11400000, guid: d8cc11962faa0954886a97123ff0a802, type: 2}
     - {fileID: 11400000, guid: dc5c46794bf88f348ad4ed658f1f6ef3, type: 2}
+    - {fileID: 11400000, guid: 9a7e8aa828e215545a85a5e657614200, type: 2}
+    - {fileID: 11400000, guid: 0a68152285c12404281db96090da6add, type: 2}
+    - {fileID: 11400000, guid: 5a886aa7417ba6040a75f97c25e0e239, type: 2}
+    Selection:
     - {fileID: 11400000, guid: e1008091cd7502e45830da42c169a8c8, type: 2}
+    - {fileID: 11400000, guid: 3aed5d887ec740a47b957c005f3a9e33, type: 2}
+    - {fileID: 11400000, guid: 9a7e8aa828e215545a85a5e657614200, type: 2}
+    - {fileID: 11400000, guid: 0a68152285c12404281db96090da6add, type: 2}
+    - {fileID: 11400000, guid: 5a886aa7417ba6040a75f97c25e0e239, type: 2}

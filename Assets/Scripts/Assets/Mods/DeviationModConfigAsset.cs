@@ -9,11 +9,10 @@ namespace HSH
     [CreateAssetMenu(menuName = "HSH/Mods/DeviationModConfigAsset")]
     public class DeviationModConfigAsset : ModConfigAsset
     {
-        protected string DisableProcessTag => $"DISABLE_PROCESS_{Info.GroupId}";
-
         [SerializeField] private StatType[] _targetStats;
         [SerializeField, Range(-1f, 1f)] private float _deviation;
         [SerializeField] private SmartChance _addModBaseChance = new SmartChance(0.2f);
+        [SerializeField] private DeviationModConfigAsset _nextLevel;
 
 
         public override string GetDescription()
@@ -21,79 +20,45 @@ namespace HSH
             return string.Format(base.GetDescription(), $"{Mathf.FloorToInt(_deviation * 100)}%");
         }
 
-        public override void Process(BreedProcessor p)
+
+        public override void TrySelect(BreedProcessor p)
         {
-            if (p.Tags.Contains(DisableProcessTag))
+            var resultMod = p.ResultMods.FirstOrDefault(a => a.Info.GroupId == Info.GroupId && a.Info.Type == Info.Type);
+            if (resultMod != null)
                 return;
 
+            if (_addModBaseChance.SampleNew())
+                p.ResultMods.Add(this);
+        }
+
+        public override void Process(BreedProcessor p)
+        {
             var seedMod = p.SeedBaseMods.OfType<DeviationModConfigAsset>().FirstOrDefault();
             var wombMod = p.WombBaseMods.OfType<DeviationModConfigAsset>().FirstOrDefault();
 
             if (seedMod != null && wombMod != null)
             {
-                if (seedMod.Info.Type != wombMod.Info.Type)
+                if (seedMod.Info.Level == wombMod.Info.Level && seedMod.Info.Type == wombMod.Info.Type && seedMod.Info.Level == Info.Level)
                 {
-                    p.SeedBaseMods.Remove(seedMod);
-                    p.WombBaseMods.Remove(wombMod);
-                    p.Tags.Add(DisableProcessTag);
-                    return;
-                }
-
-                if (seedMod.Info.Level != wombMod.Info.Level)
-                {
-                    p.SeedBaseMods.Remove(seedMod);
-                    p.WombBaseMods.Remove(wombMod);
-                    var tarMod = seedMod.Info.Level > wombMod.Info.Level ? seedMod : wombMod;
-                    p.ResultMods.Add(tarMod);
-                    p.Tags.Add(DisableProcessTag);
-                    return;
-                }
-
-                if (seedMod.Info.Level == wombMod.Info.Level)
-                {
-                    var nextLevelMod = GameManager.Data.Mods.All.OfType<DeviationModConfigAsset>()
-                        .FirstOrDefault(m => m.Info.Level == seedMod.Info.Level + 1);
-
-                    if (nextLevelMod != null)
+                    if (_nextLevel != null)
                     {
-                        bool hasNextLevelMod = p.ResultMods.Any(m => m.Info.Id == nextLevelMod.Info.Id);
-                        if (!hasNextLevelMod)
-                        {
-                            p.SeedBaseMods.Remove(seedMod);
-                            p.WombBaseMods.Remove(wombMod);
-                            p.ResultMods.Add(nextLevelMod);
-                            p.Tags.Add(DisableProcessTag);
-                            return;
-                        }
+                        p.ResultMods.Remove(this);
+                        p.ResultMods.Add(_nextLevel);
+                        return;
                     }
                 }
-                
+                else if (seedMod.Info.Type != wombMod.Info.Type)
+                {
+                    p.ResultMods.Remove(this);
+                }
             }
+        }
 
-            if (p.ResultMods.OfType<DeviationModConfigAsset>().Any())
-                return;
-            
-            if (seedMod != null)
-            {
-                p.SeedBaseMods.Remove(seedMod);
-                p.ResultMods.Add(seedMod);
-                p.Tags.Add(DisableProcessTag);
-                return;
-            }
+        public override void Apply(BreedProcessor processor)
+        {
+            foreach (var st in processor.AllStatProcessors)
+                st.Value.MinMaxDeviation += _deviation;
 
-            if (wombMod != null)
-            {
-                p.WombBaseMods.Remove(wombMod);
-                p.ResultMods.Add(wombMod);
-                p.Tags.Add(DisableProcessTag);
-                return;
-            }
-
-            if (Info.Level == 0 && _addModBaseChance.SampleNew())
-            {
-                p.ResultMods.Add(this);
-                p.Tags.Add(DisableProcessTag);
-            }
         }
     }
 }

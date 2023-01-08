@@ -30,7 +30,12 @@ namespace HSH
             return new GameProfileData.ModData(Info.Id);
         }
 
+
+        public abstract void TrySelect(BreedProcessor processor);
+
         public abstract void Process(BreedProcessor processor);
+
+        public abstract void Apply(BreedProcessor processor);
     }
 
     [Serializable]

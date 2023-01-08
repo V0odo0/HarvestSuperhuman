@@ -16,6 +16,9 @@ namespace HSH
         public SpritesCollection Sprites => _sprites;
         [SerializeField] private SpritesCollection _sprites;
 
+        public SoundsCollection Sounds => _sounds;
+        [SerializeField] private SoundsCollection _sounds;
+
         public ColorsCollection Colors => _colors;
         [SerializeField] private ColorsCollection _colors;
 
@@ -58,6 +61,9 @@ namespace HSH
             [field: SerializeField]
             public List<ModConfigAsset> All = new List<ModConfigAsset>();
 
+            [field: SerializeField]
+            public List<ModConfigAsset> Selection = new List<ModConfigAsset>();
+
 
             public ModConfigAsset GetById(string id)
             {
@@ -73,6 +79,27 @@ namespace HSH
 
             [field: SerializeField]
             public Sprite WombIcon { get; private set; }
+
+        }
+
+        [Serializable]
+        public class SoundsCollection
+        {
+            [field: SerializeField]
+            public AudioClip BlopA { get; private set; }
+
+            [field: SerializeField]
+            public AudioClip PickA { get; private set; }
+
+            [field: SerializeField]
+            public AudioClip PlantA { get; private set; }
+
+            [field: SerializeField]
+            public AudioClip HeartBeatA { get; private set; }
+
+            [field: SerializeField]
+            public AudioClip StretchA { get; private set; }
+
 
         }
 

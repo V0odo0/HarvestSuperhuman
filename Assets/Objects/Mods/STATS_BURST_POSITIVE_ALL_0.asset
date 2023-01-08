@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c851b4334c7f9419e524c0b9a6040f, type: 3}
+  m_Name: STATS_BURST_POSITIVE_ALL_0
+  m_EditorClassIdentifier: 
+  _info:
+    _groupId: STATS_BURST_ALL
+    _id: STATS_BURST_POSITIVE_ALL_0
+    _type: 2
+    _level: 1
+    _name:
+      _key: Mod.Name.STATS_BURST_POSITIVE_ALL_0
+    _description:
+      _key: Mod.Description.STATS_BURST_POSITIVE_ALL
+    _icon: {fileID: 0}
+  _targetStats: 000000000100000002000000
+  _addModBaseChance:
+    _baseChance: 0.2
+  _statsAdd: 10

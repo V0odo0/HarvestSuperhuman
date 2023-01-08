@@ -45,6 +45,26 @@ MonoBehaviour:
     _metadata:
       _runtime: []
       _editor: []
+  - _key: Mod.Type.Positive
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: Mod.Type.Neutral
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: Mod.Type.Negative
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: Mod.Name.STATS_BURST_POSITIVE_ALL
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: Mod.Description.STATS_BURST_POSITIVE_ALL
+    _metadata:
+      _runtime: []
+      _editor: []
   references:
     version: 2
     RefIds: []

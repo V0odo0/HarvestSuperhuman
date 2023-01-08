@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 namespace HSH.UI
@@ -28,6 +29,9 @@ namespace HSH.UI
         {
             _isFirstTimeAwake = false;
             gameObject.SetActive(true);
+
+            if (Settings.PlayOpenAudio)
+                SoundManager.Play(GameManager.Data.Sounds.StretchA, 0.05f, Random.Range(1.25f, 1.35f));
         }
 
         public virtual void Hide()
@@ -42,6 +46,9 @@ namespace HSH.UI
         {
             public bool HideOnAwake => _hideOnAwake;
             [SerializeField] private bool _hideOnAwake = true;
+
+            public bool PlayOpenAudio => _playOpenAudio;
+            [SerializeField] private bool _playOpenAudio = true;
         }
     }
 }

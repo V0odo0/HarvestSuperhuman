@@ -26,3 +26,4 @@ MonoBehaviour:
   _deviation: 0.2
   _addModBaseChance:
     _baseChance: 0
+  _nextLevel: {fileID: 11400000, guid: d8cc11962faa0954886a97123ff0a802, type: 2}

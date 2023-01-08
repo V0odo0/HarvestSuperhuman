@@ -36,6 +36,7 @@ namespace HSH.UI
                         if (App.ActiveGameProfile.DnaItems.Contains(item.Data))
                         {
                             App.ActiveGameProfile.DnaItems.Remove(item.Data);
+                            SoundManager.Play(GameManager.Data.Sounds.PlantA);
                             UpdateList();
                         }
                         break;

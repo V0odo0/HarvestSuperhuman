@@ -33,7 +33,7 @@ namespace HSH
             Womb = womb;
 
             SeedBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
-            WombBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
+            WombBaseMods = womb.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
             ResultMods = new List<ModConfigAsset>();
 
             VitProcessor = new StatProcessor(Mathf.Min(seed.Stats.Vit, womb.Stats.Vit), Mathf.Max(seed.Stats.Vit, womb.Stats.Vit));
@@ -55,8 +55,17 @@ namespace HSH
             _result = new GameProfileData.DnaItemData();
             _result.Type = Random.Range(0, 2) == 0 ? DnaItemType.Seed : DnaItemType.Womb;
 
-            foreach (var m in GameManager.Data.Mods.All)
-                m.Process(this);
+            foreach (var m in GameManager.Data.Mods.Selection)
+                m.TrySelect(this);
+
+            foreach (var m in ResultMods.ToArray())
+            {
+                if (ResultMods.Contains(m))
+                    m.Process(this);
+            }
+
+            foreach (var m in ResultMods)
+                m.Apply(this);
 
             ProcessStats(_result);
 
@@ -84,6 +93,7 @@ namespace HSH
             public int Min;
             public int Max;
             public int Avg => (Max + Min) / 2;
+            public int AbsAdd;
 
 
             public int MinBound;
@@ -108,7 +118,7 @@ namespace HSH
 
             public int Generate()
             {
-                return Mathf.FloorToInt(Mathf.Lerp(Min - MinBound, Max + MaxBound, MinMaxDeviation));
+                return Mathf.FloorToInt(Mathf.Lerp(Min - MinBound, Max + MaxBound, MinMaxDeviation)) + AbsAdd;
             }
         }
     }
