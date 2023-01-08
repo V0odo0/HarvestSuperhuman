@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HSH
@@ -10,6 +11,12 @@ namespace HSH
     {
         public GameCoreData GameCore => _gameCore;
         [SerializeField] private GameCoreData _gameCore;
+
+        public ColorsCollection Colors => _colors;
+        [SerializeField] private ColorsCollection _colors;
+
+        public ModsCollection Mods => _mods;
+        [SerializeField] private ModsCollection _mods;
 
 
         [Serializable]
@@ -22,14 +29,57 @@ namespace HSH
             public int MaxGrowthStages = 10;
 
             [field: SerializeField]
-            public int GrowthStageTime = 2;
+            public float GrowthStageTime = 2;
 
             [field: SerializeField]
-            public int DefaultStatThreshold = 10;
+            public int DefaultStatBreedBound = 10;
 
             [field:SerializeField]
-            public GameProfileData.DnaItemData DefaultDnaItem;
+            public GameProfileData.DnaItemData DefaultSeedDnaItem;
+
+            [field: SerializeField]
+            public GameProfileData.DnaItemData DefaultWombDnaItem;
 
         }
+
+        [Serializable]
+        public class ModsCollection
+        {
+            [field: SerializeField]
+            public List<ModConfigAsset> All = new List<ModConfigAsset>();
+
+
+            public ModConfigAsset GetById(string id)
+            {
+                return All.FirstOrDefault(a => a.Info.Id == id);
+            }
+        }
+
+        [Serializable]
+        public class ColorsCollection
+        {
+            [field: SerializeField]
+            public Color NegativeLight { get; private set; }
+
+            [field: SerializeField]
+            public Color NeutralLight { get; private set; }
+
+            [field: SerializeField]
+            public Color PositiveLight { get; private set; }
+
+        }
+
+        private void OnValidate()
+        {
+
+        }
+    }
+
+    [Serializable]
+    public enum StatType
+    {
+        Vit,
+        Str,
+        Int
     }
 }

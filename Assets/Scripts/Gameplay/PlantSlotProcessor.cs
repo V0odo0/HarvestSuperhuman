@@ -108,13 +108,17 @@ namespace HSH
             State = SlotState.Breeding;
         }
 
-        public GameProfileData.DnaItemData GetBreedResult()
+        public GameProfileData.DnaItemData FetchBreedResult()
         {
             if (State != SlotState.FullyGrown)
                 return null;
-
+            
             GrowthStage = 0;
             GrowthTime = 0;
+
+            Data.SeedDna = null;
+            Data.WombDna = null;
+            Data.BreedResultDna = null;
 
             State = SlotState.Empty;
 

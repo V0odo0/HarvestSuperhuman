@@ -10,6 +10,14 @@ namespace HSH
         public readonly GameProfileData.DnaItemData Womb;
 
 
+        public readonly StatProcessor VitProcessor;
+        public readonly StatProcessor StrProcessor;
+        public readonly StatProcessor IntProcessor;
+
+
+        public readonly Dictionary<StatType, StatProcessor> AllStatProcessors;
+        
+
         private GameProfileData.DnaItemData _result;
         
 
@@ -18,8 +26,25 @@ namespace HSH
             Seed = seed;
             Womb = womb;
 
+            VitProcessor = new StatProcessor(Mathf.Min(seed.Stats.Vit, womb.Stats.Vit), Mathf.Max(seed.Stats.Vit, womb.Stats.Vit));
+            StrProcessor = new StatProcessor(Mathf.Min(seed.Stats.Str, womb.Stats.Str), Mathf.Max(seed.Stats.Str, womb.Stats.Str));
+            IntProcessor = new StatProcessor(Mathf.Min(seed.Stats.Int, womb.Stats.Int), Mathf.Max(seed.Stats.Int, womb.Stats.Int));
+            AllStatProcessors = new Dictionary<StatType, StatProcessor>()
+            {
+                { StatType.Vit, VitProcessor },
+                { StatType.Str, StrProcessor },
+                { StatType.Int, IntProcessor },
+
+            };
+
+            foreach (var p in AllStatProcessors.Values)
+            {
+                p.MinBound = GameManager.Data.GameCore.DefaultStatBreedBound;
+                p.MaxBound = GameManager.Data.GameCore.DefaultStatBreedBound;
+            }
+
             _result = new GameProfileData.DnaItemData();
-            _result.Type = Random.Range(0, 1) == 0 ? DnaItemType.Seed : DnaItemType.Womb;
+            _result.Type = Random.Range(0, 2) == 0 ? DnaItemType.Seed : DnaItemType.Womb;
 
             ProcessStats();
         }
@@ -27,16 +52,9 @@ namespace HSH
 
         void ProcessStats()
         {
-            _result.Stats.Bea = GetResultStat(Mathf.Min(Seed.Stats.Bea, Womb.Stats.Bea),
-                Mathf.Max(Seed.Stats.Bea, Womb.Stats.Bea), GameManager.Data.GameCore.DefaultStatThreshold);
-            _result.Stats.Imm = GetResultStat(Mathf.Min(Seed.Stats.Imm, Womb.Stats.Imm),
-                Mathf.Max(Seed.Stats.Imm, Womb.Stats.Imm), GameManager.Data.GameCore.DefaultStatThreshold);
-            _result.Stats.Int = GetResultStat(Mathf.Min(Seed.Stats.Int, Womb.Stats.Int),
-                Mathf.Max(Seed.Stats.Int, Womb.Stats.Int), GameManager.Data.GameCore.DefaultStatThreshold);
-            _result.Stats.Str = GetResultStat(Mathf.Min(Seed.Stats.Str, Womb.Stats.Str),
-                Mathf.Max(Seed.Stats.Str, Womb.Stats.Str), GameManager.Data.GameCore.DefaultStatThreshold);
-            _result.Stats.Vit = GetResultStat(Mathf.Min(Seed.Stats.Vit, Womb.Stats.Vit),
-                Mathf.Max(Seed.Stats.Vit, Womb.Stats.Vit), GameManager.Data.GameCore.DefaultStatThreshold);
+            _result.Stats.Vit = VitProcessor.Generate();
+            _result.Stats.Str = StrProcessor.Generate();
+            _result.Stats.Int = IntProcessor.Generate();
         }
 
         int GetResultStat(int min, int max, int threshold)
@@ -48,6 +66,37 @@ namespace HSH
         public GameProfileData.DnaItemData GetBreedResult()
         {
             return _result;
+        }
+
+
+        public class StatProcessor
+        {
+            public int Min;
+            public int Max;
+
+            public int MinBound;
+            public int MaxBound;
+
+            public float MinMaxDeviation
+            {
+                get => _minMaxDeviation;
+                set => _minMaxDeviation = Mathf.Clamp01(value);
+            }
+            private float _minMaxDeviation;
+
+
+            public StatProcessor(int min, int max)
+            {
+                Min = min;
+                Max = max;
+                _minMaxDeviation = Random.Range(0f, 1f);
+            }
+            
+
+            public int Generate()
+            {
+                return Mathf.FloorToInt(Mathf.Lerp(Min - MinBound, Max + MaxBound, MinMaxDeviation));
+            }
         }
     }
 }

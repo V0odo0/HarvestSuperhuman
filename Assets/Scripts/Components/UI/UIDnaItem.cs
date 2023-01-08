@@ -7,22 +7,27 @@ namespace HSH.UI
 {
     public class UIDnaItem : UIMonoBehaviour
     {
-        public EventHandler Selected;
-        public EventHandler RequestRemove;
+        public event EventHandler Selected;
 
         public GameProfileData.DnaItemData Data { get; private set; }
-
+        public CanvasGroup CanvasGroup => _canvasGroup;
         
-        [Header("Refs")]
-        [SerializeField] private Button _selectButton;
-        [SerializeField] private Button _requestRemoveButton;
+        [SerializeField] private bool _allowShowAsNew = true;
+        [SerializeField] private Sprite _seedSprite;
+        [SerializeField] private Sprite _wombSprite;
 
+
+        [Header("Refs")]
+        [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private GameObject _isNewObj;
+        [SerializeField] private Button _selectButton;
+
+        [Space]
+        [SerializeField] private Image _dnaTypeImage;
         [Space]
         [SerializeField] private TextMeshProUGUI _vitText;
         [SerializeField] private TextMeshProUGUI _strText;
         [SerializeField] private TextMeshProUGUI _intText;
-        [SerializeField] private TextMeshProUGUI _immText;
-        [SerializeField] private TextMeshProUGUI _beaText;
 
 
         protected override void Awake()
@@ -30,19 +35,19 @@ namespace HSH.UI
             base.Awake();
 
             _selectButton.onClick.AddListener(() => Selected?.Invoke(this, EventArgs.Empty));
-            _requestRemoveButton.onClick.AddListener(() => RequestRemove?.Invoke(this, EventArgs.Empty));
-
         }
 
-        public void Set(GameProfileData.DnaItemData data)
+        public void Set(GameProfileData.DnaItemData data, bool isNew = false)
         {
+            _isNewObj.gameObject.SetActive(isNew && _allowShowAsNew);
+
             Data = data;
 
-            _vitText.text = data.Stats.Vit.ToString();
-            _strText.text = data.Stats.Str.ToString();
-            _intText.text = data.Stats.Int.ToString();
-            _immText.text = data.Stats.Imm.ToString();
-            _beaText.text = data.Stats.Bea.ToString();
+            _dnaTypeImage.sprite = data.Type == DnaItemType.Seed ? _seedSprite : _wombSprite;
+
+            _vitText.text = data.Stats.Vit.ToStringNice();
+            _strText.text = data.Stats.Str.ToStringNice();
+            _intText.text = data.Stats.Int.ToStringNice();
         }
     }
 }

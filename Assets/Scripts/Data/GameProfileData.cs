@@ -11,11 +11,8 @@ namespace HSH
         public PlantSurfaceData PlantSurface => _plantSurface ?? (_plantSurface = new PlantSurfaceData());
         [SerializeField] private PlantSurfaceData _plantSurface = new PlantSurfaceData();
 
-        public List<DnaItemData> Seeds => _seeds ?? (_seeds = new List<DnaItemData>());
-        [SerializeField] private List<DnaItemData> _seeds = new List<DnaItemData>();
-
-        public List<DnaItemData> Wombs => _wombs ?? (_wombs = new List<DnaItemData>());
-        [SerializeField] private List<DnaItemData> _wombs = new List<DnaItemData>();
+        public List<DnaItemData> DnaItems => _dnaItems ?? (_dnaItems = new List<DnaItemData>());
+        [SerializeField] private List<DnaItemData> _dnaItems = new List<DnaItemData>();
 
 
         [Serializable]
@@ -61,7 +58,14 @@ namespace HSH
         public class ModData
         {
             public string Id;
-            public int LevelId;
+
+
+            public ModData() { }
+
+            public ModData(string id)
+            {
+                Id = id;
+            }
         }
     }
 }

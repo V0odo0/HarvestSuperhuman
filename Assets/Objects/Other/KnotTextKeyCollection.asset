@@ -17,6 +17,22 @@ MonoBehaviour:
     _metadata:
       _runtime: []
       _editor: []
+  - _key: UI.DeleteDnaItem
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: Various.New
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: UI.Plant
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: Mod.Name.STATS_DEVIATION_POSITIVE_ALL
+    _metadata:
+      _runtime: []
+      _editor: []
   references:
     version: 2
     RefIds: []

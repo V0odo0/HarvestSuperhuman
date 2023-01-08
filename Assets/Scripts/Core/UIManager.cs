@@ -36,9 +36,9 @@ namespace HSH.UI
             }
         }
 
-        public T GetPopUpPanel<T>() where T : UIPopUpPanel
+        public T1 GetPopUpPanel<T1>() where T1 : UIPopUpPanel
         {
-            return PopUpPanels.OfType<T>().FirstOrDefault();
+            return PopUpPanels.OfType<T1>().FirstOrDefault();
         }
     }
 }

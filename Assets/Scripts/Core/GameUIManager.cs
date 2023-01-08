@@ -7,5 +7,7 @@ namespace HSH.UI
 {
     public class GameUIManager : UIManager<GameUIManager>
     {
+        public UIPlayerHud PlayerHud => _playerHud;
+        [SerializeField] private UIPlayerHud _playerHud;
     }
 }

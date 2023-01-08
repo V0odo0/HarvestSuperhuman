@@ -17,7 +17,7 @@ namespace HSH
         {
             try
             {
-                File.WriteAllText(FilePath, JsonUtility.ToJson(this));
+                File.WriteAllText(FilePath, JsonUtility.ToJson(this, true));
                 return true;
             }
             catch
@@ -28,14 +28,11 @@ namespace HSH
 
         public static T Load()
         {
-            try
-            {
-                return File.Exists(FilePath) ? JsonUtility.FromJson<T>(FilePath) : default(T);
-            }
-            catch
-            {
-                return default(T);
-            }
+            var d = File.Exists(FilePath) ? JsonUtility.FromJson<T>(File.ReadAllText(FilePath)) : default(T);
+            if (d == null)
+                return Activator.CreateInstance<T>();
+
+            return d;
         }
     }
 }

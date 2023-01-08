@@ -15,4 +15,29 @@ MonoBehaviour:
   _gameCore:
     MaxPlantSlots: 5
     MaxGrowthStages: 9
-    GrowthStageTime: 1
+    GrowthStageTime: 0.2
+    DefaultStatBreedBound: 10
+    DefaultSeedDnaItem:
+      Type: 0
+      _stats:
+        Vit: 0
+        Str: 0
+        Int: 0
+        Imm: 0
+        Bea: 0
+      _mods: []
+    DefaultWombDnaItem:
+      Type: 1
+      _stats:
+        Vit: 0
+        Str: 0
+        Int: 0
+        Imm: 0
+        Bea: 0
+      _mods: []
+  _colors:
+    <NegativeLight>k__BackingField: {r: 1, g: 0, b: 0, a: 0.2509804}
+    <NeutralLight>k__BackingField: {r: 1, g: 0.8587734, b: 0.4009434, a: 0.2509804}
+    <PositiveLight>k__BackingField: {r: 0, g: 1, b: 0, a: 0.2509804}
+  _mods:
+    All: []

@@ -18,7 +18,7 @@ namespace HSH
         private static UserAppConfig _userConfig;
 
         public static UserLocalGameProfile UserLocalGameProfile =>
-            _userLocalGameProfile ?? (_userLocalGameProfile = UserLocalGameProfile.Load() ?? new UserLocalGameProfile());
+            _userLocalGameProfile ?? (_userLocalGameProfile = UserLocalGameProfile.Load());
         private static UserLocalGameProfile _userLocalGameProfile;
 
         public static GameProfileData ActiveGameProfile => UserLocalGameProfile.GameProfileData;

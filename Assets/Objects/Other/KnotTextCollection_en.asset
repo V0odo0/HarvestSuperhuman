@@ -15,3 +15,11 @@ MonoBehaviour:
   _items:
   - _key: Core.AppName
     _rawText: Harvest Superhuman
+  - _key: UI.DeleteDnaItem
+    _rawText: Destroy
+  - _key: Various.New
+    _rawText: New
+  - _key: UI.Plant
+    _rawText: Plant
+  - _key: Mod.Name.STATS_DEVIATION_POSITIVE_ALL
+    _rawText: Positive Deviation

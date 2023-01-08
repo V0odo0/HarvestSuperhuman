@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using HSH.UI;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -35,16 +36,23 @@ namespace HSH
             switch (e)
             {
                 case PlantSlotProcessor.SlotState.Empty:
-                    var seed = GameManager.Data.GameCore.DefaultDnaItem;
-                    var womb = GameManager.Data.GameCore.DefaultDnaItem;
+                    GameUIManager.Instance.GetPopUpPanel<UISelectPlantDnaItemsPopUpPanel>().Show(() =>
+                    {
+                        var panel = GameUIManager.Instance.GetPopUpPanel<UISelectPlantDnaItemsPopUpPanel>();
+                        if (App.ActiveGameProfile.DnaItems.Contains(panel.SelectedWomb))
+                            App.ActiveGameProfile.DnaItems.Remove(panel.SelectedWomb);
 
-                    slot.Processor.Plant(seed, womb);
+                        if (App.ActiveGameProfile.DnaItems.Contains(panel.SelectedSeed))
+                            App.ActiveGameProfile.DnaItems.Remove(panel.SelectedSeed);
+
+                        slot.Processor.Plant(panel.SelectedSeed, panel.SelectedWomb);
+                    });
+
                     break;
                 case PlantSlotProcessor.SlotState.FullyGrown:
-                    var result = slot.Processor.GetBreedResult();
-                    if (result.Type == DnaItemType.Seed)
-                        App.ActiveGameProfile.Seeds.Add(result);
-                    else App.ActiveGameProfile.Wombs.Add(result);
+                    var result = slot.Processor.FetchBreedResult();
+                    App.ActiveGameProfile.DnaItems.Add(result);
+                    GameUIManager.Instance.PlayerHud.ShakeInventoryButton();
                     break;
             }
         }

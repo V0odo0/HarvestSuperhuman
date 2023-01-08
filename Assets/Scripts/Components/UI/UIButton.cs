@@ -30,6 +30,9 @@ namespace HSH.UI
             get => _iconImage == null ? null : _iconImage.sprite;
             set
             {
+                if (_iconImage == null)
+                    return;
+
                 _iconImage.sprite = value;
                 _iconImage.enabled = value != null;
             }
