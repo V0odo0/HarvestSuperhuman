@@ -17,6 +17,9 @@ namespace HSH
 
         public readonly List<ModConfigAsset> SeedBaseMods;
         public readonly List<ModConfigAsset> WombBaseMods;
+        public readonly List<ModConfigAsset> ResultMods;
+
+        public readonly HashSet<string> Tags = new HashSet<string>();
 
         public readonly Dictionary<StatType, StatProcessor> AllStatProcessors;
         
@@ -31,6 +34,7 @@ namespace HSH
 
             SeedBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
             WombBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
+            ResultMods = new List<ModConfigAsset>();
 
             VitProcessor = new StatProcessor(Mathf.Min(seed.Stats.Vit, womb.Stats.Vit), Mathf.Max(seed.Stats.Vit, womb.Stats.Vit));
             StrProcessor = new StatProcessor(Mathf.Min(seed.Stats.Str, womb.Stats.Str), Mathf.Max(seed.Stats.Str, womb.Stats.Str));
@@ -39,8 +43,7 @@ namespace HSH
             {
                 { StatType.Vit, VitProcessor },
                 { StatType.Str, StrProcessor },
-                { StatType.Int, IntProcessor },
-
+                { StatType.Int, IntProcessor }
             };
 
             foreach (var p in AllStatProcessors.Values)
@@ -49,28 +52,24 @@ namespace HSH
                 p.MaxBound = GameManager.Data.GameCore.DefaultStatBreedBound;
             }
 
-            SeedBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
-            WombBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
-
             _result = new GameProfileData.DnaItemData();
             _result.Type = Random.Range(0, 2) == 0 ? DnaItemType.Seed : DnaItemType.Womb;
 
-            ProcessStats();
+            foreach (var m in GameManager.Data.Mods.All)
+                m.Process(this);
 
-            _result.Mods.Add(GameManager.Data.Mods.All.First().ToData());
+            ProcessStats(_result);
+
+            for (int i = 0; i < Mathf.Min(GameManager.Data.GameCore.MaxDnaMods, ResultMods.Count); i++)
+                _result.Mods.Add(ResultMods[i].ToData());
         }
 
 
-        void ProcessStats()
+        void ProcessStats(GameProfileData.DnaItemData data)
         {
-            _result.Stats.Vit = VitProcessor.Generate();
-            _result.Stats.Str = StrProcessor.Generate();
-            _result.Stats.Int = IntProcessor.Generate();
-        }
-
-        int GetResultStat(int min, int max, int threshold)
-        {
-            return Random.Range(min - threshold, max + threshold);
+            data.Stats.Vit = VitProcessor.Generate();
+            data.Stats.Str = StrProcessor.Generate();
+            data.Stats.Int = IntProcessor.Generate();
         }
 
 
@@ -84,6 +83,8 @@ namespace HSH
         {
             public int Min;
             public int Max;
+            public int Avg => (Max + Min) / 2;
+
 
             public int MinBound;
             public int MaxBound;
@@ -94,6 +95,7 @@ namespace HSH
                 set => _minMaxDeviation = Mathf.Clamp01(value);
             }
             private float _minMaxDeviation;
+
 
 
             public StatProcessor(int min, int max)

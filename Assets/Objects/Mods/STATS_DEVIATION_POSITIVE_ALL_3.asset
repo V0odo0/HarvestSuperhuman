@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: STATS_DEVIATION_POSITIVE_ALL_3
   m_EditorClassIdentifier: 
   _info:
+    _groupId: STATS_DEVIATION
     _id: STATS_DEVIATION_POSITIVE_ALL_3
     _type: 2
-    _level: 2
+    _level: 4
     _name:
       _key: Mod.Name.STATS_DEVIATION_POSITIVE_ALL
     _description:
       _key: Mod.Description.STATS_DEVIATION_POSITIVE_ALL
     _icon: {fileID: 21300000, guid: f6f63d2b2671bd04abdecdf2d08e097d, type: 3}
   _targetStats: 000000000100000002000000
-  _deviation: 0.15
+  _deviation: 0.6
+  _addModBaseChance:
+    _baseChance: 0

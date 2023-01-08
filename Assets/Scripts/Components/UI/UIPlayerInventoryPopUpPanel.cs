@@ -44,7 +44,8 @@ namespace HSH.UI
         }
 
         void UpdateList()
-        { _seedDnaItemsList.Set(App.ActiveGameProfile.DnaItems.Where(d => d.Type == DnaItemType.Seed).ToList());
+        {
+            _seedDnaItemsList.Set(App.ActiveGameProfile.DnaItems.Where(d => d.Type == DnaItemType.Seed).ToList());
             _wombDnaItemsList.Set(App.ActiveGameProfile.DnaItems.Where(d => d.Type == DnaItemType.Womb).ToList());
         }
 

@@ -13,6 +13,9 @@ namespace HSH
         public GameCoreData GameCore => _gameCore;
         [SerializeField] private GameCoreData _gameCore;
 
+        public SpritesCollection Sprites => _sprites;
+        [SerializeField] private SpritesCollection _sprites;
+
         public ColorsCollection Colors => _colors;
         [SerializeField] private ColorsCollection _colors;
 
@@ -38,6 +41,9 @@ namespace HSH
             [field: SerializeField]
             public int DefaultStatBreedBound = 10;
 
+            [field: SerializeField]
+            public int MaxDnaMods = 5;
+
             [field:SerializeField]
             public GameProfileData.DnaItemData DefaultSeedDnaItem;
 
@@ -57,6 +63,17 @@ namespace HSH
             {
                 return All.FirstOrDefault(a => a.Info.Id == id);
             }
+        }
+        
+        [Serializable]
+        public class SpritesCollection
+        {
+            [field: SerializeField]
+            public Sprite SeedIcon { get; private set; }
+
+            [field: SerializeField]
+            public Sprite WombIcon { get; private set; }
+
         }
 
         [Serializable]

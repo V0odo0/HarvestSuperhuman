@@ -36,6 +36,9 @@ namespace HSH
     [Serializable]
     public class ModInfo
     {
+        public string GroupId => _groupId;
+        [SerializeField] private string _groupId;
+
         public string Id => _id;
         [SerializeField] private string _id;
 

@@ -24,8 +24,8 @@ MonoBehaviour:
   - _key: Mod.Name.STATS_DEVIATION_POSITIVE_ALL
     _rawText: Absolute EVO {0}
   - _key: Mod.Description.STATS_DEVIATION_POSITIVE_ALL
-    _rawText: Increases ALL stats upper bound by <b>{0}</b> for future generation
+    _rawText: Increases ALL stats upper bound bias by <b>{0}</b> for future generation
   - _key: Mod.Name.STATS_DEVIATION_NEGATIVE_ALL
-    _rawText: Absolute DECAY
+    _rawText: "Absolute Prostration\r"
   - _key: Mod.Description.STATS_DEVIATION_NEGATIVE_ALL
-    _rawText: Decreses ALL stats upper bound by <b>{0}</b> for future generation
+    _rawText: Decreases ALL stats upper bound bias by <b>{0}</b> for future generation

@@ -41,6 +41,9 @@ namespace HSH
         private SlotState _state;
 
         public float GrowthTime { get; private set; }
+        public float GrowthTimeNorm => GrowthTime /
+                                       (GameManager.Data.GameCore.GrowthStageTime *
+                                        GameManager.Data.GameCore.MaxGrowthStages);
         
         public int GrowthStage
         {
@@ -59,11 +62,6 @@ namespace HSH
         private GameProfileData.DnaItemData _breedResult;
 
 
-        void ProcessGrowthStage(int prevStage, int nextStage)
-        {
-
-        }
-
         public void AddGrowthTime(float t)
         {
             if (State != SlotState.Breeding)
@@ -76,7 +74,6 @@ namespace HSH
             while (GrowthStage < Mathf.FloorToInt(GrowthTime / GameManager.Data.GameCore.GrowthStageTime))
             {
                 GrowthStage++;
-                ProcessGrowthStage(GrowthStage - 1, GrowthStage);
 
                 if (GrowthStage >= GameManager.Data.GameCore.MaxGrowthStages)
                 {

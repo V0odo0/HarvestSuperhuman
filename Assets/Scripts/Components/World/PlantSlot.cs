@@ -21,6 +21,7 @@ namespace HSH
 
         [Header("Refs")]
         [SerializeField] private GameObject _root;
+        [SerializeField] private UIPlantSlotResultDna _slotResultDna;
         [SerializeField] private UIButton _actionButton;
         [SerializeField] private CanvasGroup _actionButtonCanvasGroup;
 
@@ -78,6 +79,8 @@ namespace HSH
             if (state == PlantSlotProcessor.SlotState.None)
                 return;
 
+            _slotResultDna.gameObject.SetActive(state == PlantSlotProcessor.SlotState.Breeding || state == PlantSlotProcessor.SlotState.FullyGrown);
+            
             switch (state)
             {
                 case PlantSlotProcessor.SlotState.Locked:
@@ -88,6 +91,7 @@ namespace HSH
                     break;
                 case PlantSlotProcessor.SlotState.Breeding:
                     _actionButton.Button.interactable = false;
+                    _slotResultDna.Set(Processor);
                     break;
                 case PlantSlotProcessor.SlotState.FullyGrown:
                     _actionButton.Button.interactable = true;
