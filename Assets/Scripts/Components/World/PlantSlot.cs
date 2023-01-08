@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using HSH.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HSH
 {
@@ -15,16 +17,19 @@ namespace HSH
 
         public PlantSlotProcessor Processor { get; private set; }
 
-
-        [SerializeField] private Sprite _lockedStateActionIcon;
-        [SerializeField] private Sprite _emptyStateActionIcon;
-        [SerializeField] private Sprite _plantedStateActionIcon;
+        [SerializeField] private SlotStateConfig[] _slotStateConfigs;
 
         [Header("Refs")]
         [SerializeField] private GameObject _root;
         [SerializeField] private UIButton _actionButton;
         [SerializeField] private CanvasGroup _actionButtonCanvasGroup;
-        
+
+        [SerializeField] private Image _growthTimerFillImage;
+        [SerializeField] private Plant _plant;
+
+        [Space]
+        [SerializeField] private Animator _actionButtonAnimator;
+
 
         protected override void Awake()
         {
@@ -36,28 +41,69 @@ namespace HSH
                     StateActionRequested?.Invoke(this, Processor.State);
             });
         }
+        
+        protected override void Update()
+        {
+            base.Update();
+
+            if (Processor != null)
+            {
+                if (Processor.State == PlantSlotProcessor.SlotState.Breeding)
+                {
+                    var growthTimeNorm = Processor.GrowthTime / (GameManager.Data.GameCore.MaxGrowthStages *
+                                                                 GameManager.Data.GameCore.GrowthStageTime);
+                    _growthTimerFillImage.fillAmount = growthTimeNorm;
+                }
+            }
+        }
 
 
-        void SetState(PlantSlotProcessor.SlotState state)
+        void ProcessorOnPropertyChanged(string obj)
+        {
+            switch (obj)
+            {
+                case nameof(PlantSlotProcessor.GrowthStage):
+                    _plant.SetGrowthStage(Processor.GrowthStage);
+                    break;
+                case nameof(PlantSlotProcessor.State):
+                    UpdateState(Processor.State);
+                    break;
+            }
+        }
+
+
+        void UpdateState(PlantSlotProcessor.SlotState state)
         {
             _root.SetActive(state != PlantSlotProcessor.SlotState.None);
-            
+            if (state == PlantSlotProcessor.SlotState.None)
+                return;
+
             switch (state)
             {
                 case PlantSlotProcessor.SlotState.Locked:
                     _actionButton.Button.interactable = false;
-                    _actionButton.Icon = _lockedStateActionIcon;
                     break;
                 case PlantSlotProcessor.SlotState.Empty:
                     _actionButton.Button.interactable = true;
-                    _actionButton.Icon = _emptyStateActionIcon;
                     break;
-                case PlantSlotProcessor.SlotState.Planted:
+                case PlantSlotProcessor.SlotState.Breeding:
+                    _actionButton.Button.interactable = false;
+                    break;
+                case PlantSlotProcessor.SlotState.FullyGrown:
                     _actionButton.Button.interactable = true;
-                    _actionButton.Icon = _plantedStateActionIcon;
+                    _growthTimerFillImage.fillAmount = 1f;
                     break;
             }
 
+            var slotStateConfig = _slotStateConfigs.FirstOrDefault(p => p.SourceState == state) ??
+                                  _slotStateConfigs.First();
+            _actionButton.Icon = slotStateConfig.ActionButtonIcon;
+
+            _growthTimerFillImage.enabled = state == PlantSlotProcessor.SlotState.Breeding || state == PlantSlotProcessor.SlotState.FullyGrown;
+            _plant.SetState(Processor.State);
+            
+            _actionButtonAnimator.SetInteger("State", (int) Processor.State);
+            _actionButtonAnimator.SetTrigger("StateChanged");
             _actionButtonCanvasGroup.alpha = _actionButton.Button.interactable ? 1f : 0.5f;
         }
 
@@ -66,13 +112,22 @@ namespace HSH
             if (processor == null)
             {
                 Processor = null;
-                SetState(PlantSlotProcessor.SlotState.None);
+                UpdateState(PlantSlotProcessor.SlotState.None);
                 return;
             }
 
             Processor = processor;
+            Processor.PropertyChanged += ProcessorOnPropertyChanged;
 
-            SetState(Processor.State);
+            UpdateState(Processor.State);
+        }
+
+
+        [Serializable]
+        public class SlotStateConfig
+        {
+            public PlantSlotProcessor.SlotState SourceState;
+            public Sprite ActionButtonIcon;
         }
     }
 }

@@ -17,7 +17,19 @@ namespace HSH
         {
             [field:SerializeField]
             public int MaxPlantSlots = 5;
-            
+
+            [field:SerializeField]
+            public int MaxGrowthStages = 10;
+
+            [field: SerializeField]
+            public int GrowthStageTime = 2;
+
+            [field: SerializeField]
+            public int DefaultStatThreshold = 10;
+
+            [field:SerializeField]
+            public GameProfileData.DnaItemData DefaultDnaItem;
+
         }
     }
 }

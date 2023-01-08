@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,10 +21,15 @@ namespace HSH
 
             SlotProcessors = new PlantSlotProcessor[GameManager.Data.GameCore.MaxPlantSlots];
             for (int i = 0; i < SlotProcessors.Length; i++)
-            {
-                
-            }
+                SlotProcessors[i] = new PlantSlotProcessor();
 
+            for (int i = 0; i < Mathf.Min(SlotProcessors.Length, data.PlantSlots.Count); i++)
+            {
+                if (Data.PlantSlots[i].SlotId >= SlotProcessors.Length)
+                    continue;
+
+                SlotProcessors[Data.PlantSlots[i].SlotId].SetData(Data.PlantSlots[i]);
+            }
         }
 
         public void Update()

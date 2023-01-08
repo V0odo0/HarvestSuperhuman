@@ -9,7 +9,7 @@ namespace HSH
     public class GameProfileData
     {
         public PlantSurfaceData PlantSurface => _plantSurface ?? (_plantSurface = new PlantSurfaceData());
-        private PlantSurfaceData _plantSurface = new PlantSurfaceData();
+        [SerializeField] private PlantSurfaceData _plantSurface = new PlantSurfaceData();
 
         public List<DnaItemData> Seeds => _seeds ?? (_seeds = new List<DnaItemData>());
         [SerializeField] private List<DnaItemData> _seeds = new List<DnaItemData>();
@@ -31,12 +31,15 @@ namespace HSH
             public int SlotId;
             public DnaItemData SeedDna;
             public DnaItemData WombDna;
+            public DnaItemData BreedResultDna;
             public float GrowthTime;
         }
 
         [Serializable]
         public class DnaItemData
         {
+            public DnaItemType Type = DnaItemType.Seed;
+
             public DnaStatsData Stats => _stats ?? (_stats = new DnaStatsData());
             [SerializeField] private DnaStatsData _stats = new DnaStatsData();
 
@@ -51,12 +54,13 @@ namespace HSH
             public int Str;
             public int Int;
             public int Imm;
+            public int Bea;
         }
 
         [Serializable]
         public class ModData
         {
-            public string Guid;
+            public string Id;
             public int LevelId;
         }
     }

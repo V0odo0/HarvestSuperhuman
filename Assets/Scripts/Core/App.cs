@@ -47,6 +47,9 @@ namespace HSH
         {
             _userConfig?.Save();
             _userLocalGameProfile?.Save();
+
+            _userConfig = null;
+            _userLocalGameProfile = null;
         }
     }
 }

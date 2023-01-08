@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-namespace HSH
+namespace HSH.UI
 {
-    public class GameUIManager : SingletonMonoBehaviour<GameUIManager>
+    public class GameUIManager : UIManager<GameUIManager>
     {
-        [SerializeField] private Camera _uiCamera;
     }
 }
