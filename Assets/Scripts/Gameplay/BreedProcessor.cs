@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace HSH
@@ -14,6 +15,8 @@ namespace HSH
         public readonly StatProcessor StrProcessor;
         public readonly StatProcessor IntProcessor;
 
+        public readonly List<ModConfigAsset> SeedBaseMods;
+        public readonly List<ModConfigAsset> WombBaseMods;
 
         public readonly Dictionary<StatType, StatProcessor> AllStatProcessors;
         
@@ -25,6 +28,9 @@ namespace HSH
         {
             Seed = seed;
             Womb = womb;
+
+            SeedBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
+            WombBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
 
             VitProcessor = new StatProcessor(Mathf.Min(seed.Stats.Vit, womb.Stats.Vit), Mathf.Max(seed.Stats.Vit, womb.Stats.Vit));
             StrProcessor = new StatProcessor(Mathf.Min(seed.Stats.Str, womb.Stats.Str), Mathf.Max(seed.Stats.Str, womb.Stats.Str));
@@ -43,10 +49,15 @@ namespace HSH
                 p.MaxBound = GameManager.Data.GameCore.DefaultStatBreedBound;
             }
 
+            SeedBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
+            WombBaseMods = seed.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
+
             _result = new GameProfileData.DnaItemData();
             _result.Type = Random.Range(0, 2) == 0 ? DnaItemType.Seed : DnaItemType.Womb;
 
             ProcessStats();
+
+            _result.Mods.Add(GameManager.Data.Mods.All.First().ToData());
         }
 
 

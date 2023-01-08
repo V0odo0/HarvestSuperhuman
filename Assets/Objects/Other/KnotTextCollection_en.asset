@@ -22,4 +22,10 @@ MonoBehaviour:
   - _key: UI.Plant
     _rawText: Plant
   - _key: Mod.Name.STATS_DEVIATION_POSITIVE_ALL
-    _rawText: Positive Deviation
+    _rawText: Absolute EVO {0}
+  - _key: Mod.Description.STATS_DEVIATION_POSITIVE_ALL
+    _rawText: Increases ALL stats upper bound by <b>{0}</b> for future generation
+  - _key: Mod.Name.STATS_DEVIATION_NEGATIVE_ALL
+    _rawText: Absolute DECAY
+  - _key: Mod.Description.STATS_DEVIATION_NEGATIVE_ALL
+    _rawText: Decreses ALL stats upper bound by <b>{0}</b> for future generation

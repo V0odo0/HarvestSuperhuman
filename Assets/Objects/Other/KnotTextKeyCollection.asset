@@ -33,6 +33,18 @@ MonoBehaviour:
     _metadata:
       _runtime: []
       _editor: []
+  - _key: Mod.Description.STATS_DEVIATION_POSITIVE_ALL
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: Mod.Name.STATS_DEVIATION_NEGATIVE_ALL
+    _metadata:
+      _runtime: []
+      _editor: []
+  - _key: Mod.Description.STATS_DEVIATION_NEGATIVE_ALL
+    _metadata:
+      _runtime: []
+      _editor: []
   references:
     version: 2
     RefIds: []

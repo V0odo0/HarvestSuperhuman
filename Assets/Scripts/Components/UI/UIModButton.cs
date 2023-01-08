@@ -8,13 +8,24 @@ namespace HSH.UI
 {
     public class UIModButton : UIButton
     {
+        public ModConfigAsset Config { get; private set; }
+
         [Header("Refs")]
         [SerializeField] private Image _bgImage;
-        [SerializeField] private TextMeshProUGUI _nameText;
+
+
+        protected override void Awake()
+        {
+            base.Awake();
+        }
 
 
         public void Set(ModConfigAsset config)
         {
+            Config = config;
+            if (Config == null)
+                return;
+
             if (_bgImage != null)
             {
                 switch (config.Info.Type)
@@ -32,9 +43,7 @@ namespace HSH.UI
             }
 
             Icon = config.Info.Icon;
-
-            if (_nameText != null)
-                _nameText.text = config.GetName();
+            Label = config.GetName();
         }
     }
 }

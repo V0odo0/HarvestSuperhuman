@@ -39,5 +39,13 @@ MonoBehaviour:
     <NegativeLight>k__BackingField: {r: 1, g: 0, b: 0, a: 0.2509804}
     <NeutralLight>k__BackingField: {r: 1, g: 0.8587734, b: 0.4009434, a: 0.2509804}
     <PositiveLight>k__BackingField: {r: 0, g: 1, b: 0, a: 0.2509804}
+  _uiPrefabs:
+    <ModButtonIconOnly>k__BackingField: {fileID: 4482458454153011791, guid: 5de9beb5cf4b3ea4aad2c1a3c01e8666, type: 3}
+    <ModButton>k__BackingField: {fileID: 4482458454153011791, guid: 3dbe96470327e4a4aac58ec6a81415c3, type: 3}
   _mods:
-    All: []
+    All:
+    - {fileID: 11400000, guid: 3aed5d887ec740a47b957c005f3a9e33, type: 2}
+    - {fileID: 11400000, guid: 622bda18e88ce2e46b520e949237ec96, type: 2}
+    - {fileID: 11400000, guid: d8cc11962faa0954886a97123ff0a802, type: 2}
+    - {fileID: 11400000, guid: dc5c46794bf88f348ad4ed658f1f6ef3, type: 2}
+    - {fileID: 11400000, guid: e1008091cd7502e45830da42c169a8c8, type: 2}

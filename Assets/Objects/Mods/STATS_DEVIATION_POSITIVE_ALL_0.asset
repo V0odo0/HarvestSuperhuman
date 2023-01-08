@@ -15,10 +15,11 @@ MonoBehaviour:
   _info:
     _id: STATS_DEVIATION_POSITIVE_ALL_0
     _type: 2
+    _level: 0
     _name:
       _key: Mod.Name.STATS_DEVIATION_POSITIVE_ALL
     _description:
-      _key: 
+      _key: Mod.Description.STATS_DEVIATION_POSITIVE_ALL
     _icon: {fileID: 21300000, guid: f6f63d2b2671bd04abdecdf2d08e097d, type: 3}
   _targetStats: 000000000100000002000000
   _deviation: 0.05

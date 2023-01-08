@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +21,7 @@ namespace HSH.UI
 
         [Header("Refs")]
         [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private RectTransform _modsRoot;
         [SerializeField] private GameObject _isNewObj;
         [SerializeField] private Button _selectButton;
 
@@ -28,6 +31,9 @@ namespace HSH.UI
         [SerializeField] private TextMeshProUGUI _vitText;
         [SerializeField] private TextMeshProUGUI _strText;
         [SerializeField] private TextMeshProUGUI _intText;
+
+
+        private List<UIModButton> _curModButtons = new List<UIModButton>();
 
 
         protected override void Awake()
@@ -48,6 +54,33 @@ namespace HSH.UI
             _vitText.text = data.Stats.Vit.ToStringNice();
             _strText.text = data.Stats.Str.ToStringNice();
             _intText.text = data.Stats.Int.ToStringNice();
+
+
+            foreach (var modButton in _curModButtons)
+                modButton.gameObject.SetActive(false);
+
+            foreach (var m in data.Mods)
+            {
+                var modConfig = GameManager.Data.Mods.GetById(m.Id);
+                if (modConfig == null)
+                    return;
+
+                var modBtn = _curModButtons.FirstOrDefault(b => !b.gameObject.activeSelf);
+                if (modBtn == null)
+                {
+                    modBtn = Instantiate(GameManager.Data.UIPrefabs.ModButtonIconOnly).GetComponent<UIModButton>();
+                    modBtn.RectTransform.SetParent(_modsRoot, false);
+                    modBtn.Button.onClick.AddListener(() =>
+                    {
+                        UIManager<GameUIManager>.Instance.GetPopUpPanel<UIModInfoPopUpPanel>().Show(modConfig);
+                    });
+
+                    _curModButtons.Add(modBtn);
+                }
+
+                modBtn.Set(modConfig);
+                modBtn.gameObject.SetActive(true);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HSH.UI;
 using UnityEngine;
 
 namespace HSH
@@ -14,6 +15,9 @@ namespace HSH
 
         public ColorsCollection Colors => _colors;
         [SerializeField] private ColorsCollection _colors;
+
+        public UIPrefabsCollection UIPrefabs => _uiPrefabs;
+        [SerializeField] private UIPrefabsCollection _uiPrefabs;
 
         public ModsCollection Mods => _mods;
         [SerializeField] private ModsCollection _mods;
@@ -69,9 +73,14 @@ namespace HSH
 
         }
 
-        private void OnValidate()
+        [Serializable]
+        public class UIPrefabsCollection
         {
-
+            [field:SerializeField]
+            public UIModButton ModButtonIconOnly { get; private set; }
+            
+            [field: SerializeField]
+            public UIModButton ModButton { get; private set; }
         }
     }
 

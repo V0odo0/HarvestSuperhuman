@@ -12,6 +12,11 @@ namespace HSH
         
         public virtual string GetName()
         {
+            if (Info.Name.Value.Contains("{0}"))
+            {
+                return string.Format(Info.Name.Value, Info.Level.ToRoman());
+            }
+
             return Info.Name.Value;
         }
 
@@ -36,6 +41,9 @@ namespace HSH
 
         public ModType Type => _type;
         [SerializeField] private ModType _type;
+
+        public int Level => _level;
+        [SerializeField] private int _level;
 
         public virtual KnotTextKeyReference Name => _name;
         [SerializeField] private KnotTextKeyReference _name;

@@ -13,6 +13,11 @@ namespace HSH
         [SerializeField, Range(-1f, 1f)] private float _deviation;
 
 
+        public override string GetDescription()
+        {
+            return string.Format(base.GetDescription(), $"{Mathf.FloorToInt(_deviation * 100)}%");
+        }
+
         public override void Process(BreedProcessor processor)
         {
             foreach (var stat in processor.AllStatProcessors)
