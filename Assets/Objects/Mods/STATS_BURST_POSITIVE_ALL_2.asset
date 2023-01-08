@@ -18,10 +18,10 @@ MonoBehaviour:
     _type: 2
     _level: 3
     _name:
-      _key: Mod.Name.STATS_BURST_POSITIVE_ALL_0
+      _key: Mod.Name.STATS_BURST_POSITIVE_ALL
     _description:
       _key: Mod.Description.STATS_BURST_POSITIVE_ALL
-    _icon: {fileID: 0}
+    _icon: {fileID: 21300000, guid: bf2f338c877cab74cb401ac132b35bea, type: 3}
   _targetStats: 000000000100000002000000
   _addModBaseChance:
     _baseChance: 0.05

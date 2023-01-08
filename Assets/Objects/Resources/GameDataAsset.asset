@@ -15,7 +15,7 @@ MonoBehaviour:
   _gameCore:
     MaxPlantSlots: 5
     MaxGrowthStages: 9
-    GrowthStageTime: 0.1
+    GrowthStageTime: 0.2
     DefaultStatBreedBound: 10
     MaxDnaMods: 5
     DefaultSeedDnaItem:

@@ -64,8 +64,13 @@ namespace HSH
                     m.Process(this);
             }
 
-            foreach (var m in ResultMods)
+            foreach (var m in ResultMods.ToArray())
+            {
+                if (!ResultMods.Contains(m))
+                    continue;
+
                 m.Apply(this);
+            }
 
             ProcessStats(_result);
 

@@ -6352,7 +6352,7 @@ GameObject:
   - component: {fileID: 6654007979340762495}
   - component: {fileID: 2696757089061529788}
   m_Layer: 5
-  m_Name: StartBreedingAudioSource
+  m_Name: BreedingAudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6391,7 +6391,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 307be590e33c3c645b8da132541af5d6, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.749
-  m_Pitch: 0.5
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0

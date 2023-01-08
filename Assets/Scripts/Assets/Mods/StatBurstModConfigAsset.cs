@@ -20,7 +20,7 @@ namespace HSH
 
         public override void TrySelect(BreedProcessor processor)
         {
-            if (processor.ResultMods.Any(m => m.Info.Id == Info.Id))
+            if (processor.ResultMods.Any(m => m.Info.GroupId == Info.GroupId))
                 return;
 
             if (_addModBaseChance.SampleNew())
@@ -32,15 +32,24 @@ namespace HSH
 
         }
 
-        public override void Apply(BreedProcessor processor)
+        public override void Apply(BreedProcessor p)
         {
-            foreach (var st in processor.AllStatProcessors)
-            {
-                if (_targetStats.Contains(st.Key))
-                    st.Value.AbsAdd += _statsAdd;
-            }
+            var seedMod = p.SeedBaseMods.OfType<StatBurstModConfigAsset>().FirstOrDefault(m => m.Info.GroupId == Info.GroupId);
+            var wombMod = p.WombBaseMods.OfType<StatBurstModConfigAsset>().FirstOrDefault(m => m.Info.GroupId == Info.GroupId);
 
-            processor.ResultMods.Remove(this);
+            if (seedMod != null && wombMod != null)
+            {
+                foreach (var s in p.AllStatProcessors)
+                {
+                    if (seedMod._targetStats.Contains(s.Key))
+                        s.Value.AbsAdd += seedMod._statsAdd;
+
+                    if (wombMod._targetStats.Contains(s.Key))
+                        s.Value.AbsAdd += wombMod._statsAdd;
+                }
+
+                p.ResultMods.Remove(this);
+            }
         }
     }
 }
