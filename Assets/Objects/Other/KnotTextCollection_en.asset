@@ -38,4 +38,5 @@ MonoBehaviour:
   - _key: Mod.Name.STATS_BURST_POSITIVE_ALL
     _rawText: Single Burst {0}
   - _key: Mod.Description.STATS_BURST_POSITIVE_ALL
-    _rawText: Adds {0} points to ALL stats when combined with the same perk and disappears
+    _rawText: Adds <b>{0}</b> points to ALL stats when combined with the same perk
+      and disappears
