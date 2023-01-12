@@ -50,8 +50,6 @@ namespace HSH
             public int Vit;
             public int Str;
             public int Int;
-            public int Imm;
-            public int Bea;
         }
 
         [Serializable]

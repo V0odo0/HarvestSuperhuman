@@ -13,12 +13,9 @@ namespace HSH.UI
         [SerializeField] private Image _dnaTypeImage;
         [SerializeField] private UIModButton[] _mods;
 
-        [SerializeField] private GameObject _vitObj;
-        [SerializeField] private TextMeshProUGUI _vitText;
-        [SerializeField] private GameObject _strObj;
-        [SerializeField] private TextMeshProUGUI _strText;
-        [SerializeField] private GameObject _intObj;
-        [SerializeField] private TextMeshProUGUI _intText;
+        [SerializeField] private UIDnaStat _vitDnaStat;
+        [SerializeField] private UIDnaStat _strDnaStat;
+        [SerializeField] private UIDnaStat _intDnaStat;
 
         [Space]
         [SerializeField] private AudioSource _resultPopAudioSource;
@@ -45,9 +42,9 @@ namespace HSH.UI
         {
             _dnaTypeObj.SetActive(false);
 
-            _vitObj.SetActive(false);
-            _strObj.SetActive(false);
-            _intObj.SetActive(false);
+            _vitDnaStat.gameObject.SetActive(false);
+            _strDnaStat.gameObject.SetActive(false);
+            _intDnaStat.gameObject.SetActive(false);
 
             foreach (var m in _mods)
                 m.gameObject.SetActive(false);
@@ -59,8 +56,6 @@ namespace HSH.UI
         {
             float delaySec = GameManager.Data.GameCore.GrowthStageTime;
 
-            _resultPopAudioSource.Play();
-            _resultPopAudioSource.pitch += 0.05f;
             yield return new WaitForSeconds(delaySec);
 
             _dnaTypeImage.sprite = _result.Type == DnaItemType.Seed
@@ -73,27 +68,24 @@ namespace HSH.UI
             _resultPopAudioSource.pitch += 0.05f;
             yield return new WaitForSeconds(delaySec);
 
-            var statDiff = _result.Stats.Vit - _processor.BreedProcessor.VitProcessor.Avg;
-            _vitText.text = $"{_result.Stats.Vit} <size=75%>[{(statDiff > 0 ? "+" : string.Empty)}{statDiff}]</size>";
-            _vitObj.SetActive(true);
+            _vitDnaStat.SetDiff(_processor.BreedProcessor.VitProcessor.Avg, _result.Stats.Vit, GameManager.Data.GameCore.MaxDnaStatValue, StatType.Vit);
+            _vitDnaStat.gameObject.SetActive(true);
 
 
             _resultPopAudioSource.Play();
             _resultPopAudioSource.pitch += 0.05f;
             yield return new WaitForSeconds(delaySec);
 
-            statDiff = _result.Stats.Str - _processor.BreedProcessor.StrProcessor.Avg;
-            _strText.text = $"{_result.Stats.Str} <size=75%>[{(statDiff > 0 ? "+" : string.Empty)}{statDiff}]</size>";
-            _strObj.SetActive(true);
+            _strDnaStat.SetDiff(_processor.BreedProcessor.StrProcessor.Avg, _result.Stats.Str, GameManager.Data.GameCore.MaxDnaStatValue, StatType.Str);
+            _strDnaStat.gameObject.SetActive(true);
 
 
             _resultPopAudioSource.Play();
             _resultPopAudioSource.pitch += 0.05f;
             yield return new WaitForSeconds(delaySec);
-
-            statDiff = _result.Stats.Int - _processor.BreedProcessor.IntProcessor.Avg;
-            _intText.text = $"{_result.Stats.Int} <size=75%>[{(statDiff > 0 ? "+" : string.Empty)}{statDiff}]</size>";
-            _intObj.SetActive(true);
+            
+            _intDnaStat.SetDiff(_processor.BreedProcessor.IntProcessor.Avg, _result.Stats.Int, GameManager.Data.GameCore.MaxDnaStatValue, StatType.Int);
+            _intDnaStat.gameObject.SetActive(true);
 
 
             _resultPopAudioSource.Play();

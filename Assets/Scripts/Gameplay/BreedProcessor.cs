@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace HSH
 {
@@ -36,24 +38,27 @@ namespace HSH
             WombBaseMods = womb.Mods.Select(d => GameManager.Data.Mods.GetById(d.Id)).Where(d => d != null).ToList();
             ResultMods = new List<ModConfigAsset>();
 
-            VitProcessor = new StatProcessor(Mathf.Min(seed.Stats.Vit, womb.Stats.Vit), Mathf.Max(seed.Stats.Vit, womb.Stats.Vit));
-            StrProcessor = new StatProcessor(Mathf.Min(seed.Stats.Str, womb.Stats.Str), Mathf.Max(seed.Stats.Str, womb.Stats.Str));
-            IntProcessor = new StatProcessor(Mathf.Min(seed.Stats.Int, womb.Stats.Int), Mathf.Max(seed.Stats.Int, womb.Stats.Int));
-            AllStatProcessors = new Dictionary<StatType, StatProcessor>()
+
+            var defaultMinMaxBreedBound = GameManager.Data.GameCore.DefaultMinMaxBreedBound;
+            var defaultDeviation = GameManager.Data.GameCore.DefaultMinMaxDeviation;
+
+            VitProcessor = new StatProcessor(new Vector2Int(Mathf.Min(seed.Stats.Vit, womb.Stats.Vit),
+                Mathf.Max(seed.Stats.Vit, womb.Stats.Vit)), defaultMinMaxBreedBound, defaultDeviation);
+            StrProcessor = new StatProcessor(new Vector2Int(Mathf.Min(seed.Stats.Str, womb.Stats.Str), 
+                Mathf.Max(seed.Stats.Str, womb.Stats.Str)), defaultMinMaxBreedBound, defaultDeviation);
+            IntProcessor = new StatProcessor(new Vector2Int(Mathf.Min(seed.Stats.Int, womb.Stats.Int), 
+                Mathf.Max(seed.Stats.Int, womb.Stats.Int)), defaultMinMaxBreedBound, defaultDeviation);
+
+            AllStatProcessors = new Dictionary<StatType, StatProcessor>
             {
                 { StatType.Vit, VitProcessor },
                 { StatType.Str, StrProcessor },
                 { StatType.Int, IntProcessor }
             };
-
-            foreach (var p in AllStatProcessors.Values)
-            {
-                p.MinBound = GameManager.Data.GameCore.DefaultStatBreedBound;
-                p.MaxBound = GameManager.Data.GameCore.DefaultStatBreedBound;
-            }
+            
 
             _result = new GameProfileData.DnaItemData();
-            _result.Type = Random.Range(0, 2) == 0 ? DnaItemType.Seed : DnaItemType.Womb;
+            _result.Type = Random.Range(0f, 1f) > 0.5f ? DnaItemType.Seed : DnaItemType.Womb;
 
             foreach (var m in GameManager.Data.Mods.Selection)
                 m.TrySelect(this);
@@ -95,14 +100,12 @@ namespace HSH
 
         public class StatProcessor
         {
-            public int Min;
-            public int Max;
-            public int Avg => (Max + Min) / 2;
+            public Vector2Int MinMax;
+            public int Avg => (MinMax.x + MinMax.y) / 2;
             public int AbsAdd;
 
 
-            public int MinBound;
-            public int MaxBound;
+            public Vector2Int MinMaxBreedBound;
 
             public float MinMaxDeviation
             {
@@ -113,17 +116,21 @@ namespace HSH
 
 
 
-            public StatProcessor(int min, int max)
+            public StatProcessor(Vector2Int minMax, Vector2Int minMaxBreedBound, Vector2 deviation)
             {
-                Min = min;
-                Max = max;
-                _minMaxDeviation = Random.Range(0f, 1f);
+                MinMax = minMax;
+                MinMaxBreedBound = minMaxBreedBound;
+                _minMaxDeviation = deviation.GetRandom();
             }
             
 
-            public int Generate()
+            public int Generate(bool minIsZero = true)
             {
-                return Mathf.FloorToInt(Mathf.Lerp(Min - MinBound, Max + MaxBound, MinMaxDeviation)) + AbsAdd;
+                var from = MinMax.x - MinMaxBreedBound.x;
+                if (minIsZero)
+                    from = Mathf.Clamp(from, 0, Int32.MaxValue);
+
+                return Mathf.FloorToInt(Mathf.Lerp(from, MinMax.y + MinMaxBreedBound.y, MinMaxDeviation)) + AbsAdd;
             }
         }
     }

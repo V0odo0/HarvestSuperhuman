@@ -36,8 +36,11 @@ namespace HSH.UI
             }
         }
 
-        public T1 GetPopUpPanel<T1>() where T1 : UIPopUpPanel
+        public T1 GetPopUpPanel<T1>(string popUpName = "") where T1 : UIPopUpPanel
         {
+            if (!string.IsNullOrEmpty(popUpName))
+                return PopUpPanels.OfType<T1>().FirstOrDefault(p => p.gameObject.name == popUpName);
+
             return PopUpPanels.OfType<T1>().FirstOrDefault();
         }
     }

@@ -28,9 +28,9 @@ namespace HSH.UI
         [Space]
         [SerializeField] private Image _dnaTypeImage;
         [Space]
-        [SerializeField] private TextMeshProUGUI _vitText;
-        [SerializeField] private TextMeshProUGUI _strText;
-        [SerializeField] private TextMeshProUGUI _intText;
+        [SerializeField] private UIDnaStat _vitDnaStat;
+        [SerializeField] private UIDnaStat _strDnaStat;
+        [SerializeField] private UIDnaStat _intDnaStat;
 
 
         private List<UIModButton> _curModButtons = new List<UIModButton>();
@@ -51,11 +51,10 @@ namespace HSH.UI
 
             _dnaTypeImage.sprite = data.Type == DnaItemType.Seed ? _seedSprite : _wombSprite;
 
-            _vitText.text = data.Stats.Vit.ToStringNice();
-            _strText.text = data.Stats.Str.ToStringNice();
-            _intText.text = data.Stats.Int.ToStringNice();
-
-
+            _vitDnaStat.Set(data.Stats.Vit, GameManager.Data.GameCore.MaxDnaStatValue, StatType.Vit);
+            _strDnaStat.Set(data.Stats.Str, GameManager.Data.GameCore.MaxDnaStatValue, StatType.Str);
+            _intDnaStat.Set(data.Stats.Int, GameManager.Data.GameCore.MaxDnaStatValue, StatType.Int);
+            
             foreach (var modButton in _curModButtons)
                 modButton.gameObject.SetActive(false);
 

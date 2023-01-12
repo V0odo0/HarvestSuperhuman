@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultDatabase: {fileID: 11400000, guid: e5aa28733e1c4104ca8702f97aa0658a, type: 2}
   _manager:
-    rid: 8494609291795496960
+    rid: 8494609340677750784
   _loadOnStartup: 1
   references:
     version: 2
     RefIds:
-    - rid: 8494609291795496960
+    - rid: 8494609340677750784
       type: {class: KnotManager, ns: Knot.Localization, asm: Knot.Localization}
       data:
         _serializationPlaceholder: 0

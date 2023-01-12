@@ -16,7 +16,9 @@ MonoBehaviour:
     MaxPlantSlots: 5
     MaxGrowthStages: 9
     GrowthStageTime: 0.2
-    DefaultStatBreedBound: 10
+    MaxDnaStatValue: 999
+    DefaultMinMaxBreedBound: {x: 8, y: 10}
+    DefaultMinMaxDeviation: {x: 0.05, y: 1}
     MaxDnaMods: 5
     DefaultSeedDnaItem:
       Type: 0
@@ -49,6 +51,9 @@ MonoBehaviour:
     <NegativeLight>k__BackingField: {r: 1, g: 0, b: 0, a: 0.2509804}
     <NeutralLight>k__BackingField: {r: 1, g: 0.8587734, b: 0.4009434, a: 0.2509804}
     <PositiveLight>k__BackingField: {r: 0, g: 1, b: 0, a: 0.2509804}
+    <VitStat>k__BackingField: {r: 0.7176471, g: 0.17925124, b: 0.10980394, a: 1}
+    <StrStat>k__BackingField: {r: 0.10980392, g: 0.12941177, b: 0.7176471, a: 1}
+    <IntStat>k__BackingField: {r: 0.62130326, g: 0.10980394, b: 0.7176471, a: 1}
   _uiPrefabs:
     <ModButtonIconOnly>k__BackingField: {fileID: 4482458454153011791, guid: 5de9beb5cf4b3ea4aad2c1a3c01e8666, type: 3}
     <ModButton>k__BackingField: {fileID: 4482458454153011791, guid: 3dbe96470327e4a4aac58ec6a81415c3, type: 3}

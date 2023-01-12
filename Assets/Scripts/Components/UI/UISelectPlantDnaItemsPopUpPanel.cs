@@ -35,7 +35,10 @@ namespace HSH.UI
                 SelectedSeed = item.Data;
                 UpdateSelection();
                 if (SelectedSeed != null)
+                {
                     _selectedSeedItemAnim.Play();
+                    SoundManager.Play(GameManager.Data.Sounds.BlopA, 0.5f, 1.1f);
+                }
             };
             _wombDnaItemsList.Selected += (sender, item) =>
             {
@@ -43,18 +46,23 @@ namespace HSH.UI
                 UpdateSelection();
 
                 if (SelectedWomb != null)
+                {
                     _selectedWombItemAnim.Play();
+                    SoundManager.Play(GameManager.Data.Sounds.BlopA, 0.5f, 1.1f);
+                }
             };
 
             _selectedSeedItem.Selected += (sender, args) =>
             {
                 SelectedSeed = null;
                 UpdateSelection();
+                SoundManager.Play(GameManager.Data.Sounds.BlopA, 0.5f, 0.7f);
             };
             _selectedWombItem.Selected += (sender, args) =>
             {
                 SelectedWomb = null;
                 UpdateSelection();
+                SoundManager.Play(GameManager.Data.Sounds.BlopA, 0.5f, 0.7f);
             };
 
             _plantButton.Button.onClick.AddListener(() =>

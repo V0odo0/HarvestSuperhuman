@@ -41,8 +41,15 @@ namespace HSH
             [field: SerializeField]
             public float GrowthStageTime = 2;
 
+
             [field: SerializeField]
-            public int DefaultStatBreedBound = 10;
+            public int MaxDnaStatValue = 999;
+
+            [field: SerializeField]
+            public Vector2Int DefaultMinMaxBreedBound = new Vector2Int(8, 10);
+            
+            [field: SerializeField]
+            public Vector2 DefaultMinMaxDeviation = new Vector2(0.05f, 1f);
 
             [field: SerializeField]
             public int MaxDnaMods = 5;
@@ -114,6 +121,30 @@ namespace HSH
 
             [field: SerializeField]
             public Color PositiveLight { get; private set; }
+
+
+            [field: SerializeField]
+            public Color VitStat { get; private set; }
+
+            [field: SerializeField]
+            public Color StrStat { get; private set; }
+
+            [field: SerializeField]
+            public Color IntStat { get; private set; }
+
+
+            public Color GetStatColor(StatType stat)
+            {
+                switch (stat)
+                {
+                    default:
+                        return VitStat;
+                    case StatType.Str:
+                        return StrStat;
+                    case StatType.Int:
+                        return IntStat;
+                }
+            }
 
         }
 
